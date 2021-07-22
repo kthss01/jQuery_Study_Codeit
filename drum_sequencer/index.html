@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Launchpad</title>
+    <meta charset="utf-8" />
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="pad">
+      <img src="images/pad.png" width="700" height="570">
+      <button id="play-btn">
+        <img src="images/play.png" width="50" height="50">
+      </button>
+      <button id="stop-btn">
+        <img src="images/stop.png" width="50" height="50">
+      </button>
+
+      <div class="cell-container">
+        <div class="cell green" id="cell1">
+          <div class="key">1</div>
+          <div class="instrument">Kick</div>
+        </div>
+
+        <div class="cell blue" id="cell2">
+          <div class="key">2</div>
+          <div class="instrument">Closed<br>Hi-hat</div>
+        </div>
+
+        <div class="cell blue" id="cell3">
+          <div class="key">3</div>
+          <div class="instrument">Open<br>Hi-hat</div>
+        </div>
+
+        <div class="cell red" id="cell4">
+          <div class="key">4</div>
+          <div class="instrument">Clap</div>
+        </div>
+
+        <div class="cell red" id="cell5">
+          <div class="key">5</div>
+          <div class="instrument">Snap</div>
+        </div>
+
+        <div class="cell blue" id="cell6">
+          <div class="key">6</div>
+          <div class="instrument">Crash</div>
+        </div>
+
+        <div class="cell green" id="cell7">
+          <div class="key">7</div>
+          <div class="instrument">Tom 1</div>
+        </div>
+
+        <div class="cell green" id="cell8">
+          <div class="key">8</div>
+          <div class="instrument">Tom 2</div>
+        </div>
+
+        <div class="cell blue" id="cell9">
+          <div class="key">9</div>
+          <div class="instrument">Tambourine</div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script>
+      // 루프 틀기
+      let loop = new Audio('./audio/loop.mp3');
+
+      $('#play-btn').on('click', function() {
+        loop.play();
+      });
+      $('#stop-btn').on('click', function() {
+        loop.pause();
+        loop.currentTime = 0;
+      });
+
+
+      const drumName = ['kick_drum', 'closed_hihat', 'open_hihat', 'clap', 'snap', 'crash', 'tom1', 'tom2', 'tambourine'];
+      const drum = drumName.map((ele, i) => new Audio(`./audio/0${i+1}_${ele}.wav`));
+
+      // 키보드 입력
+      $(document).on('keydown', function(event) {
+        const key = ['1','2','3','4','5','6','7','8','9'];
+        if (!key.includes(event.key)) return;
+        // if (Number(event.key) < 1 || Number(event.key) > 9) return; // 이렇게는 안됨
+
+        // console.log(`#cell${event['key']}`);
+        // console.log($(`#cell${event['key']}`));
+        $(`#cell${event.key}`).addClass('playing');
+        // $(`#cell${event['key']}`).addClass('playing');
+
+        // 드럼 소리 추가
+        drum[event.key - 1].currentTime = 0;
+        drum[event.key - 1].play();
+      });
+      $(document).on('keyup', function(event) {
+        for (let i = 1; i <= 9; i++){
+          $(`#cell${i}`).removeClass('playing'); // 해당 클래스 없으면 변화없다고함
+        }
+      });
+
+    </script>
+  </body>
+</html>
