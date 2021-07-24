@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>스크롤1</title>
+  <style media="screen">
+    body {
+      height: 3000px;
+    }
+
+    .top {
+      height: 300px;
+      background-color: skyblue;
+      text-align: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+      line-height: 300px;
+    }
+
+    .go-to-top {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+
+      width: 100px;
+      height: 35px;
+
+      background-color: skyblue;
+      border: none;
+      color: #fff;
+    }
+  </style>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="top">
+    Fade away...
+  </div>
+
+  <button class="go-to-top">Go To Top</button>
+
+  <script>
+    $(window).on('scroll', function() {
+      console.log($(window).scrollTop()); // 스크롤 위치 출력 맨위 0
+
+      // height 쓰면 요소의 높이 받아옴
+      $('.top').css('opacity', 1 - $(window).scrollTop() / $('.top').height());
+    });
+
+    $('.go-to-top').on('click', function() {
+      // $(window).scrollTop(0); // 이러면 바로 훅 올라가버림
+      $('html, body').animate({scrollTop: 0}, 2000);
+    });
+  </script>
+
+</body>
+</html>

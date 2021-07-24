@@ -22,7 +22,9 @@ function selectMenu(event) {
     if (event.key === '4') targetId = 'paris';
   }
 
+  $('#photo').hide();
   $('#photo').attr('src', `./images/${targetId}.png`);
+  $('#photo').fadeIn(1000);
   $('#menu a').css('font-weight', 'normal');
   $(`#${targetId}`).css('font-weight', 'bold');
 }
